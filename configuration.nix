@@ -5,45 +5,14 @@
 { config, pkgs, ... }:
 
 {
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
-      ./dev-env.nix
-      
-      # Home manager
-      # <home-manager/nixos>
     ];
 
   # Bootloader.
-  # boot.loader.systemd-boot.enable = true;
+  boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
-  boot.loader.grub.device = "nodev";
-  boot.loader.grub.enable = true;
-  boot.loader.grub.useOSProber = true;
-  boot.loader.grub.efiSupport = true;
-  boot.supportedFilesystems = [ "ntfs" ];
-
-
-  # custom file_system mount points
-
-  fileSystems."perm" = {
-    device = "/dev/nvme0n1p2";
-    fsType = "auto";
-    mountPoint = "/perm";
-  };
-
-  fileSystems."archie" = {
-    device = "/dev/nvme0n1p3";
-    fsType = "auto";
-    mountPoint = "/archie";
-  };
-
-  fileSystems."marley" = {
-    device = "/dev/sda5";
-    fsType = "auto";
-    mountPoint = "/marley";
-  };
 
   networking.hostName = "nixos"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
@@ -76,20 +45,16 @@
   # Enable Flatpak
   services.flatpak.enable = true;
 
-  # Configure keymap in X11
-  services.xserver = {
-    layout = "gb";
-    xkbVariant = "";
-  };
-
-  # Configure console keymap
-  console.keyMap = "uk";
-
   # Enable CUPS to print documents.
   # services.printing.enable = true;
+  
+  # Configure keymap in X11
+  services.xserver.xkb = {
+    layout = "us";
+    variant = "";
+  };
 
   # Enable sound with pipewire.
-  sound.enable = true;
   hardware.pulseaudio.enable = false;
   security.rtkit.enable = true;
   services.pipewire = {
@@ -206,9 +171,9 @@
   # this value at the release version of the first install of this system.
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
-  system.stateVersion = "23.11"; # Did you read the comment?
 
   system.autoUpgrade.enable = true;
   system.autoUpgrade.allowReboot = true;
-  # system.autoUpgrade.channel = "https://channels.nixos.org/nixos-23.11";
+  # system.autoUpgrade.channel = "https://channels.nixos.org/nixos-24.11";
+  system.stateVersion = "24.11"; # Did you read the comment?
 }
