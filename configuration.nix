@@ -8,6 +8,7 @@
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
+      ./dev-env.nix
     ];
 
   # Bootloader.
@@ -41,6 +42,13 @@
   # Enable the GNOME Desktop Environment.
   services.xserver.displayManager.gdm.enable = true;
   services.xserver.desktopManager.gnome.enable = true;
+  
+  # FILESYSTEM
+ fileSystems."perm" = {
+    device = "/dev/nvme0n1p6";
+    fsType = "auto";
+    mountPoint = "/gamma";
+  };
 	
   # Enable Flatpak
   services.flatpak.enable = true;
@@ -112,7 +120,7 @@
     pkgs.wl-clipboard
 
     # desktop
-    pkgs.gnome.gnome-tweaks
+    pkgs.gnome-tweaks
     pkgs.papirus-icon-theme
     pkgs.papirus-folders
     pkgs.volantes-cursors
@@ -131,6 +139,7 @@
     pkgs.stow
     pkgs.starship
     pkgs.tmux
+    pkgs.ghostty
 
     pkgs.gparted
     
@@ -140,6 +149,7 @@
 
     # work, productivity etc
     pkgs.firefox
+    pkgs.chromium
   ];
 
   nixpkgs.config.permittedInsecurePackages = [

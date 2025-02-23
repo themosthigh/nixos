@@ -16,7 +16,6 @@
 			helix
 			neovim
 			lunarvim
-			vimPlugins.codeium-vim
 
 			gnumake
 				
@@ -59,6 +58,9 @@
 
 			# java
 			jdk11	
+
+      # zig
+      zig
 		];
 	};
 }
