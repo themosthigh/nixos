@@ -3,7 +3,6 @@
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
 { config, pkgs, ... }:
-
 {
   imports =
     [ # Include the results of the hardware scan.
@@ -34,9 +33,9 @@
   # Select internationalisation properties.
   i18n.defaultLocale = "en_GB.UTF-8";
 
-  # Pinyin input
-  i18n.inputMethod.enabled = "ibus";
-  i18n.inputMethod.ibus.engines = with pkgs.ibus-engines; [libpinyin];
+  # # Pinyin input
+  # i18n.inputMethod.enabled = "ibus";
+  # i18n.inputMethod.ibus.engines = with pkgs.ibus-engines; [libpinyin];
   
 
   # Enable the X11 windowing system.
@@ -47,11 +46,11 @@
   services.xserver.desktopManager.gnome.enable = true;
   
   # FILESYSTEM
- fileSystems."perm" = {
-    device = "/dev/nvme0n1p6";
-    fsType = "auto";
-    mountPoint = "/gamma";
-  };
+ # fileSystems."perm" = {
+ #    device = "/dev/nvme0n1p6";
+ #    fsType = "auto";
+ #    mountPoint = "/gamma";
+ #  };
 	
   # Enable Flatpak
   services.flatpak.enable = true;
@@ -61,12 +60,12 @@
   
   # Configure keymap in X11
   services.xserver.xkb = {
-    layout = "us";
+    layout = "gb";
     variant = "";
   };
 
   # Enable sound with pipewire.
-  hardware.pulseaudio.enable = false;
+  services.pulseaudio.enable = false;
   security.rtkit.enable = true;
   services.pipewire = {
     enable = true;
@@ -82,7 +81,7 @@
   };
 
   # Enable touchpad support (enabled default in most desktopManager).
-  # services.xserver.libinput.enable = true;i
+  # services.xserver.libinput.enable = true;
 
   # bluetooth  
   hardware.bluetooth.enable = true; # enables support for Bluetooth
@@ -109,7 +108,8 @@
   # garabage collection
   nix.gc.automatic = true;
   nix.gc.dates = "6:00";
-  
+
+
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = [
@@ -129,12 +129,7 @@
     pkgs.volantes-cursors
 
     # fonts
-    pkgs.nerdfonts
     pkgs.monaspace
-    pkgs.noto-fonts
-    pkgs.noto-fonts-emoji
-    pkgs.noto-fonts-cjk-sans
-    pkgs.noto-fonts-cjk-serif
 
     # terminals and TUIs
     pkgs.btop
@@ -158,6 +153,8 @@
   nixpkgs.config.permittedInsecurePackages = [
     # "nodejs-16.20.2"
   ];
+
+  nix.settings.experimental-features = ["nix-command" "flakes"];
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
@@ -188,5 +185,5 @@
   system.autoUpgrade.enable = true;
   system.autoUpgrade.allowReboot = true;
   # system.autoUpgrade.channel = "https://channels.nixos.org/nixos-24.11";
-  system.stateVersion = "24.11"; # Did you read the comment?
+  system.stateVersion = "25.05"; # Did you read the comment?
 }
